@@ -1,0 +1,25 @@
+#!/bin/bash
+
+
+#THIS SCRIPT CAN BE FOUND AT:
+#https://community.octoprint.org/t/setting-up-octoprint-on-a-raspberry-octoprint-running-raspbian/2337
+#Day of copying: Jan 26, 2020
+#changed user "pi" to "octoprint"
+#changed psoition of /boot/octopi.txt to /home/octoprint/.octoprint/octopi.txt
+
+# Start / stop streamer daemon
+
+case "$1" in
+    start)
+        /home/octoprint/scripts/webcamDaemon >/dev/null 2>&1 &
+        echo "$0: started"
+        ;;
+    stop)
+        pkill -x webcamDaemon
+        pkill -x mjpg_streamer
+        echo "$0: stopped"
+        ;;
+    *)
+        echo "Usage: $0 {start|stop}" >&2
+        ;;
+esac
