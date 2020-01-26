@@ -1,0 +1,15 @@
+version: "3.7"
+services:
+  octoprint:
+    image: octoprint:latest
+    volumes:
+      - octoprint_data:/home/octoprint/
+    restart: always
+    ports:
+      - "5000:5000"
+      - "8080:8080"
+    devices:
+      - "/dev/ttyUSB0:/dev/ttyUSB0"
+      - "/dev/video0:/dev/video0"
+volumes:
+  octoprint_data:
