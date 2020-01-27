@@ -24,6 +24,13 @@ RUN git clone https://github.com/jacksonliam/mjpg-streamer.git
 WORKDIR ./mjpg-streamer/mjpg-streamer-experimental
 RUN export LD_LIBRARY_PATH=. && make
 
+#Load and build zlib
+WORKDIR /opt
+ADD https://www.zlib.net/zlib-1.2.11.tar.gz ./zlib-1.2.11.tar.gz
+RUN gzip -d zlib-1.2.11.tar.gz && tar -xf zlib-1.2.11.tar
+WORKDIR zlib-1.2.11
+RUN chmod +x configure && ./configure && make && make install
+
 #Minor cleanup at this point
 RUN apt-get purge -y cmake subversion && apt-get autoremove -y && apt-get clean -y
 
