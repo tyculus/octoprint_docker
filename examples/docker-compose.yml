@@ -4,12 +4,19 @@ services:
     image: octoprint:latest
     volumes:
       - octoprint_data:/home/octoprint/
-    restart: always
+    restart: unless-stopped
     ports:
       - "5000:5000"
       - "8080:8080"
     devices:
       - "/dev/ttyUSB0:/dev/ttyUSB0"
       - "/dev/video0:/dev/video0"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 2m30s
+      timeout: 10s
+      retries: 3
+      start_period: 90s
+
 volumes:
   octoprint_data:
