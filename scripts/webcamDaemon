@@ -4,7 +4,7 @@
 #https://community.octoprint.org/t/setting-up-octoprint-on-a-raspberry-pi-running-raspbian/2337
 #Day of copying: Jan 26, 2020
 #changed user "pi" to "octoprint"
-#changed psoition of /boot/octopi.txt to /home/octoprint/.octoprint/octopi.txt
+#changed position of /boot/octopi.txt to /home/octoprint/octopi.txt
 
 MJPGSTREAMER_HOME=/opt/mjpg-streamer/mjpg-streamer-experimental
 MJPGSTREAMER_INPUT_USB="input_uvc.so"
