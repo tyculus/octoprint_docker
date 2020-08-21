@@ -12,25 +12,40 @@ EXPOSE 5000/tcp
 USER root
 
 #Update and upgrade, then install [nano, procps(pkill), dependancies of octoprint] and at last install [dependancies of mjpg-streamer]
-RUN apt-get update && apt-get upgrade -y && apt-get install -y nano procps python2.7-minimal python-pip python-dev python-setuptools python-virtualenv git libyaml-dev build-essential && apt-get install -y subversion libjpeg62-turbo-dev imagemagick ffmpeg libv4l-dev cmake
+RUN apt-get update && \
+	apt-get upgrade -y && \
+	apt-get install -y nano procps python3.8-minimal python3.8-pip python3.8-dev python3.8-setuptools python-virtualenv git libyaml-dev build-essential && \
+	apt-get install -y subversion libjpeg62-turbo-dev imagemagick ffmpeg libv4l-dev cmake
 
 #Build mjpg-streamer for webcams
 WORKDIR /opt
-RUN git clone https://github.com/jacksonliam/mjpg-streamer.git && cd ./mjpg-streamer/mjpg-streamer-experimental && export LD_LIBRARY_PATH=. && make
+RUN git clone https://github.com/jacksonliam/mjpg-streamer.git && \
+	cd ./mjpg-streamer/mjpg-streamer-experimental && \
+	export LD_LIBRARY_PATH=. && \
+	make
 
 #Load and build zlib
 WORKDIR /opt
 ADD https://www.zlib.net/zlib-1.2.11.tar.gz ./zlib-1.2.11.tar.gz
-RUN gzip -d zlib-1.2.11.tar.gz && tar -xf zlib-1.2.11.tar && rm zlib-1.2.11.tar && cd zlib-1.2.11 && chmod +x configure && ./configure && make && make install
+RUN gzip -d zlib-1.2.11.tar.gz && \
+	tar -xf zlib-1.2.11.tar && \
+	rm zlib-1.2.11.tar && \
+	cd zlib-1.2.11 && \
+	chmod +x configure && \
+	./configure && \
+	make && \
+	make install
 
 #Minor cleanup at this point
-RUN apt-get purge -y cmake subversion && apt-get autoremove -y && apt-get clean -y
+RUN apt-get purge -y cmake subversion && \
+	apt-get autoremove -y && \
+	apt-get clean -y
 
 
 #Create user and add to groups
-RUN useradd -ms /bin/bash octoprint
-#RUN groupadd -g 44 video && groupadd -g 20 dialout
-RUN usermod -aG video,dialout octoprint
+RUN useradd -ms /bin/bash octoprint && \
+	usermod -aG video,dialout octoprint
+#RUN groupadd -g 44 video && groupadd -g 20 dialout#
 
 
 
@@ -40,7 +55,12 @@ USER octoprint:octoprint
 
 #Create octoprint directory and python environment, therein install pip and octoprint
 WORKDIR /home/octoprint
-RUN mkdir oprint && cd /home/octoprint/oprint &&  virtualenv ./venv && . ./venv/bin/activate && pip install pip --upgrade && pip install octoprint
+RUN mkdir oprint && \
+	cd /home/octoprint/oprint && \
+	virtualenv ./venv && \
+	. ./venv/bin/activate && \
+	pip install pip --upgrade && \
+	pip install octoprint
 
 #Add webcam scripts and add them to the config
 WORKDIR /home/octoprint
