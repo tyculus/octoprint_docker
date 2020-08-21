@@ -5,7 +5,7 @@
 #https://community.octoprint.org/t/setting-up-octoprint-on-a-raspberry-octoprint-running-raspbian/2337
 #Day of copying: Jan 26, 2020
 #changed user "pi" to "octoprint"
-#changed psoition of /boot/octopi.txt to /home/octoprint/.octoprint/octopi.txt
+#changed position of /boot/octopi.txt to /home/octoprint/.octoprint/octopi.txt
 
 # Start / stop streamer daemon
 
