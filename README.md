@@ -1,5 +1,7 @@
 # octoprint_docker
 
+**Important:** This branch uses Python2.7, which is deprecated. You can try the development branch but it may be unstable.
+
 Allows you to build a docker container of octoprint with webcam support. Only tested on the Raspberry Pi 4, but should work on other systems. A reverse proxy is not included, therefore you should NOT expose this to the internet as-is. It is not possible to reboot the pi/server from within octoprint.
 
 There is an example docker-compose file to get you started. Your printer is expected at port "/dev/ttyUSB0" and your camera as a raspberry pi camera. Your files and settings will be stored in a docker volume and are therefore persistent. It will automatically start after a reboot.
