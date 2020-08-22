@@ -14,7 +14,7 @@ USER root
 #Update and upgrade, then install [nano, procps(pkill), dependancies of octoprint] and at last install [dependancies of mjpg-streamer]
 RUN apt-get update && \
 	apt-get upgrade -y && \
-	apt-get install -y nano procps python3.8-minimal python3.8-pip python3.8-dev python3.8-setuptools python-virtualenv git libyaml-dev build-essential && \
+	apt-get install -y nano procps python3.7-minimal python3-pip python3.7-dev python3-setuptools python3-virtualenv git libyaml-dev build-essential && \
 	apt-get install -y subversion libjpeg62-turbo-dev imagemagick ffmpeg libv4l-dev cmake
 
 #Build mjpg-streamer for webcams
@@ -57,8 +57,8 @@ USER octoprint:octoprint
 WORKDIR /home/octoprint
 RUN mkdir oprint && \
 	cd /home/octoprint/oprint && \
-	virtualenv ./venv && \
-	. ./venv/bin/activate && \
+	python3 -m virtualenv venv --python=python3.7 && \
+	. venv/bin/activate && \
 	pip install pip --upgrade && \
 	pip install octoprint
 
